@@ -1,0 +1,24 @@
+{
+  "name": "sliderr",
+  "version": "1.0.0",
+  "description": "An easily configurable Javascript slider to rotate HTML content",
+  "main": "src/sliderr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adyngom/sliderr.git"
+  },
+  "keywords": [
+    "javascript",
+    "slideshow",
+    "carousel"
+  ],
+  "author": "Ady Ngom <adyngom.com@gmail.com> (http://adyngom.com.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adyngom/sliderr/issues"
+  },
+  "homepage": "https://github.com/adyngom/sliderr#readme"
+}
