@@ -1,7 +1,5 @@
-var Sliderr = {
-	sayHello: function () {
+export default class {
+	sayHello() {
 		console.log("Hello from Sliderr land :)");
 	}
 }
-
-module.exports = Sliderr;
