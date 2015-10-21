@@ -10,12 +10,12 @@ export default class Fader extends Sliderr {
     slideNext() {
         super.slideNext();
         this.slides[this.lastSlide].style.opacity = 0;
-        this.slides[slider._index].style.opacity = 1;
+        this.slides[this._index].style.opacity = 1;
     }
 
     slidePrev() {
     	super.slidePrev();
     	this.slides[this.lastSlide].style.opacity = 0;
-        this.slides[slider._index].style.opacity = 1;
+        this.slides[this._index].style.opacity = 1;
     }
 }

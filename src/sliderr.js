@@ -42,12 +42,12 @@ export default class {
         }, 1000);
     }
 
-    static _increment() {
+    _increment() {
         this.lastSlide = this._index;
         this._index = (this._index < (this.len - 1)) ? this._index + 1 : 0;
     }
 
-    static _decrement() {
+    _decrement() {
         this.lastSlide = this._index;
         this._index = (this._index > 0) ? this._index - 1 : (this.len - 1);
     }

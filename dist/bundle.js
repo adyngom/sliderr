@@ -91,14 +91,14 @@
 	        value: function slideNext() {
 	            _get(Object.getPrototypeOf(Fader.prototype), 'slideNext', this).call(this);
 	            this.slides[this.lastSlide].style.opacity = 0;
-	            this.slides[slider._index].style.opacity = 1;
+	            this.slides[this._index].style.opacity = 1;
 	        }
 	    }, {
 	        key: 'slidePrev',
 	        value: function slidePrev() {
 	            _get(Object.getPrototypeOf(Fader.prototype), 'slidePrev', this).call(this);
 	            this.slides[this.lastSlide].style.opacity = 0;
-	            this.slides[slider._index].style.opacity = 1;
+	            this.slides[this._index].style.opacity = 1;
 	        }
 	    }]);
 
@@ -175,17 +175,19 @@
 	                _this.slideshow = setTimeout(timer, 4000);
 	            }, 1000);
 	        }
-	    }], [{
+	    }, {
 	        key: "_increment",
 	        value: function _increment() {
 	            this.lastSlide = this._index;
 	            this._index = this._index < this.len - 1 ? this._index + 1 : 0;
+	            console.log("increment: ", this._index);
 	        }
 	    }, {
 	        key: "_decrement",
 	        value: function _decrement() {
 	            this.lastSlide = this._index;
 	            this._index = this._index > 0 ? this._index - 1 : this.len - 1;
+	            console.log("decrement: ", this._index);
 	        }
 	    }]);
 
