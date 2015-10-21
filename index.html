@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Sliderr</title>
+    <meta charset="UTF-8">
+    <title>Sliderr</title>
 </head>
+
 <body>
-	<script src="dist/bundle.js"></script>
+    <div id="sliderr">
+        <div><img src="" alt=""></div>
+        <div><img src="" alt=""></div>
+        <div><img src="" alt=""></div>
+        <div><img src="" alt=""></div>
+    </div>
+    <script src="dist/bundle.js"></script>
+    <script>
+    window.onload = function(evt) {
+        var sliderr = new Fader(0, "sliderr", {
+            slideshow: false
+        });
+        console.log(sliderr);
+    }
+    </script>
 </body>
+
 </html>

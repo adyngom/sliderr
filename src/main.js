@@ -1,5 +1,3 @@
-import sliderr from './sliderr';
+window.Fader = require('./Fader');
 
-const Carousel = new sliderr();
-
-console.log(Carousel.sayHello());
+console.log(Fader);
