@@ -47,7 +47,6 @@
 	'use strict';
 
 	window.Fader = __webpack_require__(1);
-
 	console.log(Fader);
 
 /***/ },
@@ -82,6 +81,7 @@
 
 	        // config the slides using the Sliderr constructor
 	        _get(Object.getPrototypeOf(Fader.prototype), 'constructor', this).call(this, i, el, opts);
+	        console.log(opts);
 	    }
 
 	    // override the slideNext method to add the fade effect
@@ -147,7 +147,7 @@
 	    }
 
 	    /**
-	     * @method: setAnimation
+	     * @method: slideNext
 	     **/
 
 	    _createClass(_default, [{
@@ -180,14 +180,12 @@
 	        value: function _increment() {
 	            this.lastSlide = this._index;
 	            this._index = this._index < this.len - 1 ? this._index + 1 : 0;
-	            console.log("increment: ", this._index);
 	        }
 	    }, {
 	        key: "_decrement",
 	        value: function _decrement() {
 	            this.lastSlide = this._index;
 	            this._index = this._index > 0 ? this._index - 1 : this.len - 1;
-	            console.log("decrement: ", this._index);
 	        }
 	    }]);
 

@@ -3,7 +3,8 @@ import Sliderr from './Sliderr';
 export default class Fader extends Sliderr {
     constructor(i, el, opts) {
         // config the slides using the Sliderr constructor
-        super(i, el, opts)
+        super(i, el, opts);
+        console.log(opts);
     }
 
     // override the slideNext method to add the fade effect
