@@ -1,10 +1,14 @@
 import Sliderr from './Sliderr';
 
+require('../styles/fader.css');
+
 export default class Fader extends Sliderr {
     constructor(i, el, opts) {
         // config the slides using the Sliderr constructor
         super(i, el, opts);
-        console.log(opts);
+        super.cssSetup({
+        	"addClassName": ['sliderr', 'sliderr-fader']
+        });
     }
 
     // override the slideNext method to add the fade effect
@@ -18,5 +22,9 @@ export default class Fader extends Sliderr {
     	super.slidePrev();
     	this.slides[this.lastSlide].style.opacity = 0;
         this.slides[this._index].style.opacity = 1;
+    }
+
+    slideShow() {
+    	super.slideShow();
     }
 }

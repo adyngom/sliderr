@@ -8,18 +8,18 @@
 
 <body>
     <div id="sliderr">
-        <div><img src="http://lorempixel.com/400/200/" alt=""></div>
-        <div><img src="http://lorempixel.com/400/200/" alt=""></div>
-        <div><img src="http://lorempixel.com/400/200/" alt=""></div>
-        <div><img src="http://lorempixel.com/400/200/" alt=""></div>
+        <div><img src="https://unsplash.it/1080/540/?image=0" alt=""></div>
+        <div><img src="https://unsplash.it/1080/540/?image=10" alt=""></div>
+        <div><img src="https://unsplash.it/1080/540/?image=20" alt=""></div>
+        <div><img src="https://unsplash.it/1080/540/?image=35" alt=""></div>
     </div>
-    <script src="dist/bundle.js"></script>
+    <script src="dist/sliderr.js"></script>
     <script>
     window.onload = function(evt) {
         var sliderr = new Fader(0, "sliderr", {
             slideshow: true
         });
-        console.log(sliderr);
+        sliderr.slideShow();
     }
     </script>
 </body>

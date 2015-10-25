@@ -7,9 +7,9 @@ export default class {
         this._el = document.getElementById(el);
         this.slides = this._el.children;
         this.lastSlide = i;
-        this.slideWidth = this.slides[0].offsetWidth,
-            this.len = this.slides.length;
-        this.container = document.getElementsByTagName("body")[0]; // change this ASAP
+        this.slideWidth = this.slides[0].offsetWidth;
+        this.len = this.slides.length;
+        this.container = this._el.parentNode; 
         this.slideshow = null;
         this.defaults = {
             slideshow: true,
@@ -19,12 +19,27 @@ export default class {
         // let's take advantage of Object.assign to merge the two objects
         this.opts = (!!opts) ? Object.assign({}, this.defaults, opts) : this.defaults;
     }
+    cssSetup(config) {
+            console.log(this);
+            ((config, sliderr) => {
+                var cssUtils = {
+                    "addClassName": function addClassName(classes = ['sliderr']) {
+                        sliderr._el.className += ' ' + classes.join(' ');
+                    }
+                }
 
+                for (var fn of Object.keys(config)) {
+                    console.log(fn);
+                    cssUtils[fn](config[fn]);
+                }
+        })(config, this);
+    }
     /**
-     * @method: slideNext
-     **/
+    * @method: slideNext
+    **/
     slideNext() {
         this._increment();
+        console.log("Sliderr slideNext");
     }
 
     slidePrev() {
@@ -36,10 +51,12 @@ export default class {
     }
 
     slideShow() {
-        this.slideshow = setTimeout( timer => {
+        let timer = () => {
             this.slideNext();
             this.slideshow = setTimeout(timer, 4000);
-        }, 1000);
+        };
+
+        this.slideshow = setTimeout( timer, 1000);
     }
 
     _increment() {
