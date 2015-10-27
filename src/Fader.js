@@ -7,8 +7,11 @@ export default class Fader extends Sliderr {
         // config the slides using the Sliderr constructor
         super(i, el, opts);
         super.cssSetup({
-        	"addClassName": ['sliderr', 'sliderr-fader']
+        	"addClassName": ['sliderr', 'sliderr-loader', 'sliderr-fader']
         });
+        super.cssSetup({
+    		"removeClassName": ['sliderr-loader']
+    	});
     }
 
     // override the slideNext method to add the fade effect

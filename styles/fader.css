@@ -1,10 +1,18 @@
 .sliderr-fader {
 	position: relative;
+	visibility: hidden;
+}
+.sliderr-loader:after {
+	content: "loading...";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 50%;
+	top: 50%;
+	visibility: visible;
 }
 .sliderr-fader > * {
 	position: absolute;
 	top: 0;
 	left: 0;
-	opacity: 0;
-	transition: opacity 2000ms ease-in;
 }

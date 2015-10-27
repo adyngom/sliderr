@@ -73,7 +73,7 @@
 
 	var _Sliderr3 = _interopRequireDefault(_Sliderr2);
 
-	__webpack_require__(3);
+	__webpack_require__(4);
 
 	var Fader = (function (_Sliderr) {
 	    _inherits(Fader, _Sliderr);
@@ -84,7 +84,10 @@
 	        // config the slides using the Sliderr constructor
 	        _get(Object.getPrototypeOf(Fader.prototype), 'constructor', this).call(this, i, el, opts);
 	        _get(Object.getPrototypeOf(Fader.prototype), 'cssSetup', this).call(this, {
-	            "addClassName": ['sliderr', 'sliderr-fader']
+	            "addClassName": ['sliderr', 'sliderr-loader', 'sliderr-fader']
+	        });
+	        _get(Object.getPrototypeOf(Fader.prototype), 'cssSetup', this).call(this, {
+	            "removeClassName": ['sliderr-loader']
 	        });
 	    }
 
@@ -119,7 +122,7 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -129,7 +132,13 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _Utils = __webpack_require__(3);
+
+	var _Utils2 = _interopRequireDefault(_Utils);
 
 	var _default = (function () {
 	    /**
@@ -143,29 +152,64 @@
 	        this._el = document.getElementById(el);
 	        this.slides = this._el.children;
 	        this.lastSlide = i;
-	        this.slideWidth = this.slides[0].offsetWidth;
+	        this.slideWidth = null;
+	        this.slideHeight = null;
 	        this.len = this.slides.length;
 	        this.container = this._el.parentNode;
 	        this.slideshow = null;
 	        this.defaults = {
-	            slideshow: true,
+	            slideshow: false,
 	            slidetime: 3000
 	        };
 
 	        // let's take advantage of Object.assign to merge the two objects
 	        this.opts = !!opts ? Object.assign({}, this.defaults, opts) : this.defaults;
+	        this.init();
 	    }
 
 	    _createClass(_default, [{
+	        key: 'init',
+	        value: function init() {
+	            var _this = this;
+
+	            if (!!this.opts.slideshow) {
+	                setTimeout(function () {
+	                    _this.slideShow();
+	                }, this.opts.slidetime);
+	            }
+
+	            var elBounds = _Utils2['default'].getBoundingClientRect(this.slides[0]);
+
+	            this._el.style['height'] = elBounds.height + "px";
+	            this._el.style['width'] = elBounds.width + "px";
+	        }
+
+	        // Todo: Move this to Utils
+	    }, {
 	        key: 'cssSetup',
 	        value: function cssSetup(config) {
-	            console.log(this);
 	            (function (config, sliderr) {
 	                var cssUtils = {
 	                    "addClassName": function addClassName() {
 	                        var classes = arguments.length <= 0 || arguments[0] === undefined ? ['sliderr'] : arguments[0];
 
 	                        sliderr._el.className += ' ' + classes.join(' ');
+	                    },
+	                    "removeClassName": function removeClassName() {
+	                        var classes = arguments.length <= 0 || arguments[0] === undefined ? ['sliderr-loader'] : arguments[0];
+
+	                        console.log(this);
+	                        var _length = classes.length;
+	                        var _removeClass = function _removeClass(classname) {
+	                            sliderr._el.classList.remove(classname); // classList not supported on IE 9 and below
+	                        };
+	                        if (_length > 1) {
+	                            classes.map(function (classname) {
+	                                _removeClass(classname);
+	                            });
+	                        } else {
+	                            _removeClass(classes[0]);
+	                        }
 	                    }
 	                };
 
@@ -177,7 +221,6 @@
 	                    for (var _iterator = Object.keys(config)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                        var fn = _step.value;
 
-	                        console.log(fn);
 	                        cssUtils[fn](config[fn]);
 	                    }
 	                } catch (err) {
@@ -204,7 +247,6 @@
 	        key: 'slideNext',
 	        value: function slideNext() {
 	            this._increment();
-	            console.log("Sliderr slideNext");
 	        }
 	    }, {
 	        key: 'slidePrev',
@@ -219,11 +261,11 @@
 	    }, {
 	        key: 'slideShow',
 	        value: function slideShow() {
-	            var _this = this;
+	            var _this2 = this;
 
 	            var timer = function timer() {
-	                _this.slideNext();
-	                _this.slideshow = setTimeout(timer, 4000);
+	                _this2.slideNext();
+	                _this2.slideshow = setTimeout(timer, 4000);
 	            };
 
 	            this.slideshow = setTimeout(timer, 1000);
@@ -250,15 +292,70 @@
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var Utils = {
+	    /**  
+	     * getBoundingClientRect()
+	     * helper function adapted from 'Pro Javascript for Web Developers ' 
+	     * by Nicolas Zakas
+	     **/
+	    getBoundingClientRect: function getBoundingClientRect(element) {
+	        var scrollTop = document.documentElement.scrollTop;
+	        var scrollLeft = document.documentElement.scrollLeft;
+	        if (element.getBoundingClientRect) {
+	            if (typeof getBoundingClientRect.offset != "number") {
+	                var temp = document.createElement("div");
+	                temp.style.cssText = "position:absolute;left:0;top:0;";
+	                document.body.appendChild(temp);
+	                getBoundingClientRect.offset = -temp.getBoundingClientRect().top - scrollTop;
+	                document.body.removeChild(temp);
+	                temp = null;
+	            }
+	            var rect = element.getBoundingClientRect();
+	            var offset = getBoundingClientRect.offset;
+	            return {
+	                left: rect.left + offset,
+	                right: rect.right + offset,
+	                top: rect.top + offset,
+	                bottom: rect.bottom + offset,
+	                width: rect.right - rect.left,
+	                height: rect.bottom - rect.top
+	            };
+	        } else {
+	            var actualLeft = getElementLeft(element);
+	            var actualTop = getElementTop(element);
+	            return {
+	                left: actualLeft - scrollLeft,
+	                right: actualLeft + element.offsetWidth - scrollLeft,
+	                top: actualTop - scrollTop,
+	                bottom: actualTop + element.offsetHeight - scrollTop,
+	                width: element.offsetWidth - scrollLeft,
+	                height: element.offsetHeight - scrollTop
+	            };
+	        }
+	    }
+	};
+
+	exports["default"] = Utils;
+	module.exports = exports["default"];
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(4);
+	var content = __webpack_require__(5);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -275,21 +372,21 @@
 	}
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".sliderr-fader {\n\tposition: relative;\n}\n.sliderr-fader > * {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\topacity: 0;\n\ttransition: opacity 2000ms ease-in;\n}", ""]);
+	exports.push([module.id, ".sliderr-fader {\n\tposition: relative;\n\tvisibility: hidden;\n}\n.sliderr-loader:after {\n\tcontent: \"loading...\";\n\tposition: absolute;\n\twidth: 100%;\n\theight: 100%;\n\tleft: 50%;\n\ttop: 50%;\n\tvisibility: visible;\n}\n.sliderr-fader > * {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n}", ""]);
 
 	// exports
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/*
@@ -345,7 +442,7 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
